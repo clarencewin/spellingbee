@@ -10,18 +10,15 @@ import (
 	"strings"
 )
 
-type TestObject struct {
-	privateVar string
-	PublicVar string `json:"publicVar""`
-}
-
 type WordInfo struct {
-	textOnly string
-	Word string `json:"word"`
-	IsPangram bool `json:"pangram"`
+	textOnly  string
+	Word      string `json:"word"`
+	IsPangram bool   `json:"pangram"`
 }
 
 func main() {
+	words := dictionaryList()
+
 	router := gin.Default()
 
 	router.GET("/words", func(c *gin.Context) {
@@ -29,6 +26,7 @@ func main() {
 		canContain := c.Query("canContain")
 		//
 		c.JSON(http.StatusOK, wordsMatching(
+			words,
 			mustContain,
 			canContain,
 		))
@@ -44,7 +42,7 @@ func dictionaryList() []string {
 
 	f, err := os.Open("words.txt")
 
-	if err !=nil {
+	if err != nil {
 		log.Fatal(err)
 	}
 
@@ -61,10 +59,9 @@ func dictionaryList() []string {
 }
 
 //Gets words containing
-func wordsMatching(required string,
+func wordsMatching(wordsList []string,
+	required string,
 	canContain string) []WordInfo {
-
-	wordsList := dictionaryList()
 
 	canContainMap := map[string]bool{required: true}
 	canContainList := strings.Split(canContain, "")
@@ -76,8 +73,6 @@ func wordsMatching(required string,
 	wordsCont := make([]WordInfo, 0, len(wordsList))
 
 	for _, word := range wordsList {
-
-		//fmt.Println(word)
 
 		reg, err := regexp.Compile("[^a-z]+")
 
@@ -113,7 +108,7 @@ func wordsMatching(required string,
 			isPangram := len(canContainMap) == len(lettersUsed)
 
 			if addToList {
-				wordsCont = append(wordsCont, WordInfo{wordFormatted, word, isPangram })
+				wordsCont = append(wordsCont, WordInfo{wordFormatted, word, isPangram})
 			}
 		}
 	}
