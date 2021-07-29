@@ -28,7 +28,7 @@ func main() {
 		c.Redirect(http.StatusMovedPermanently, "/ui")
 	})
 
-	router.GET("/wordsJson", func(c *gin.Context) {
+	router.GET("/rest/words", func(c *gin.Context) {
 		mustContain := c.Query("mustContain")
 		canContain := c.Query("canContain")
 		//
@@ -39,7 +39,7 @@ func main() {
 		))
 	})
 
-	router.GET("/wordsHtml", func(c *gin.Context) {
+	router.GET("/words", func(c *gin.Context) {
 		mustContain := c.Query("mustContain")
 		canContain := c.Query("canContain")
 
