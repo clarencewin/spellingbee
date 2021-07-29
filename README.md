@@ -8,3 +8,6 @@ Use UI For HTML output
 
 For JSON Output
 [/rest/words?mustContain=f&canContain=ood](http://localhost:8080/rest/words?mustContain=f&canContain=ood)
+
+Word list from:
+https://github.com/dwyl/english-words/blob/master/words.txt
