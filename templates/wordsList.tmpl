@@ -1,0 +1,16 @@
+<head>
+    <meta charset="UTF-8">
+    <title>🐝 Spelling Bee</title>
+    <link rel="stylesheet" href="ui/results.css">
+</head>
+<body>
+<table style="border: 1px solid #000;">
+    <tr>
+        <th>Matching Words</th>
+    </tr>
+    {{ range .values }}
+    <tr>
+      <td style="border: 1px solid #000;" pangram={{.IsPangram}}>{{ .Word }} {{if .IsPangram}}   🍯{{end}}</td>
+    </tr>
+    {{ end }}
+</table>

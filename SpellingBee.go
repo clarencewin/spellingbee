@@ -20,8 +20,15 @@ func main() {
 	words := dictionaryList()
 
 	router := gin.Default()
+	router.LoadHTMLGlob("templates/*")
 
-	router.GET("/words", func(c *gin.Context) {
+	router.StaticFS("ui", http.Dir("static"))
+
+	router.GET("", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "/ui")
+	})
+
+	router.GET("/wordsJson", func(c *gin.Context) {
 		mustContain := c.Query("mustContain")
 		canContain := c.Query("canContain")
 		//
@@ -30,6 +37,18 @@ func main() {
 			mustContain,
 			canContain,
 		))
+	})
+
+	router.GET("/wordsHtml", func(c *gin.Context) {
+		mustContain := c.Query("mustContain")
+		canContain := c.Query("canContain")
+
+		wordsToDisplay := wordsMatching(
+			words,
+			mustContain,
+			canContain)
+
+		c.HTML(http.StatusOK, "wordsList.tmpl", gin.H{"values": wordsToDisplay})
 	})
 
 	router.Run(":8080")
