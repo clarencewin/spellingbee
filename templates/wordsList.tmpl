@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>🐝 Spelling Bee</title>
+    <title>🐝 NYT Spelling Bee Solver</title>
     <link rel="stylesheet" href="ui/results.css">
 </head>
 <body>
@@ -10,7 +10,11 @@
     </tr>
     {{ range .values }}
     <tr>
-      <td style="border: 1px solid #000;" pangram={{.IsPangram}}>{{ .Word }} {{if .IsPangram}}   🍯{{end}}</td>
+      <td style="border: 1px solid #000;" pangram={{.IsPangram}}>{{ .Word }}
+      {{if .IsPangram}}
+         🍯
+      {{end}}
+      </td>
     </tr>
     {{ end }}
 </table>
